@@ -60,7 +60,7 @@ swiss(X) :- person(X), citizen(X,Y), Y = ch.
 good_hearing(X) :- person(X), \+ patient(X, hearing).
 
 % is person over 65 and suffers from mental ilnesses?
-mental_check(X) :- person(X), \+ patient(X, mental), age(X, Y), Y < 65.
+mental_check(X) :- person(X), \+ (age(X, Y), Y > 64, patient(X, mental)).
 
 % is person actually eilgible?
 eligible(X) :- old_enough(X), young_enough(X), swiss(X), good_hearing(X), mental_check(X).
