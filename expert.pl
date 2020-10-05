@@ -16,7 +16,7 @@ person(alice). % too old
 person(bob).   % not swiss
 person(mike).  % hearing defect
 person(hans).  % mental illness and over 65
-person(anita).
+person(peter).
 
 
 age(john, 55).
@@ -25,7 +25,7 @@ age(alice, 71).
 age(bob, 45).
 age(mike, 25).
 age(hans, 68).
-age(anita, 68).
+age(peter, 68).
 
 
 citizen(john, ch).
@@ -34,7 +34,7 @@ citizen(alice, ch).
 citizen(bob, us).
 citizen(mike, ch).
 citizen(hans, ch).
-citizen(anita, ch).
+citizen(peter, ch).
 
 
 patient(mike, hearing).
