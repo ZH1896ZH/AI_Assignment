@@ -63,15 +63,15 @@ swiss(X) :- person(X), citizen(X,Y), Y = ch.
 good_hearing(X) :- person(X), \+ patient(X, hearing).
 
 % people older than 65 and suffer from mental ilnesses are not eligble
-mental_check(X) :- person(X), \+ (age(X, Y), Y > 64, patient(X, mental)).
+mental_check(X) :- person(X), \+ (age(X, Y), Y > 64, patient(X, mental)). % why not Y>65 ???
 
 % people having three or more diseases
-high_risk_value(X):- person(X), \+ diseases_count >= 3.
+high_risk_value(X):- person(X), \+ diseases_count >= 3. % is there a possibility to create integer variable ???
 
 % people older than 55 AND (suffer from mental ilnesses OR having 2 diseases)
 medium_risk_value(X):- person(X), \+ (age(X,Y), Y > 55, patient(X, mental)).
 
-% people whose risk values are not high and medium
+% people whose risk values are not high and medium --> low
 low_risk_value(X):- person(X), \+ (medium_risk_value(X);  high_risk_value(X)).
 
 % is person actually eilgible?
