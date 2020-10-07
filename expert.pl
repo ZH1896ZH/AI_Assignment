@@ -2,9 +2,13 @@
 % Authors: Robin Roth, Christian Roth
 % This knowledge base is part of the final assignment.
 
-% diseases that will be checked
+% diseases that will be checked.
 disease(hearing).
 disease(mental).
+
+disease(cholestorol).
+disease(diabetes).
+disease(heart).
 
 %------------------------------------------------------------------------------
 % people in the knowledge base will be defined as follows
@@ -17,7 +21,7 @@ person(bob).   % not swiss
 person(mike).  % hearing defect
 person(hans).  % mental illness and over 65
 person(peter).
-person(fredy). % mental illness and over 55
+person(fredy). % mental illness and between 55 and 65
 
 
 age(john, 55).
@@ -39,10 +43,14 @@ citizen(hans, ch).
 citizen(peter, ch).
 citizen(fredy, ch).
 
+%------------------------------------------------------------------------------
+% If a person has a disease it is a patient.
+%------------------------------------------------------------------------------
 
+%patient(X,Y):- person(X), disease(Y).
 patient(mike, hearing).
 patient(hans, mental).
-
+patient(fredy, mental).
 
 %------------------------------------------------------------------------------
 % The following rules are phrased in a way, where they return true, if the
@@ -66,18 +74,18 @@ good_hearing(X) :- person(X), \+ patient(X, hearing).
 mental_check(X) :- person(X), \+ (age(X, Y), Y > 64, patient(X, mental)). % why not Y>65 ???
 
 % people having three or more diseases
-high_risk_value(X):- person(X), \+ diseases_count >= 3. % is there a possibility to create integer variable ???
+high_risk_value(X) :- person(X), medium_risk_value(X). % idk how to check +3 diseases
 
 % people older than 55 AND (suffer from mental ilnesses OR having 2 diseases)
-medium_risk_value(X):- person(X), \+ (age(X,Y), Y > 55, patient(X, mental)).
+medium_risk_value(X) :- person(X), (age(X,Y), Y > 55, patient(X, mental)).
 
 % people whose risk values are not high and medium --> low
-low_risk_value(X):- person(X), \+ (medium_risk_value(X);  high_risk_value(X)).
+low_risk_value(X) :- person(X), \+ (medium_risk_value(X);  high_risk_value(X)).
 
 % is person actually eilgible?
 eligible(X) :- old_enough(X), young_enough(X), swiss(X), good_hearing(X), 
     mental_check(X), low_risk_value(X).
 
 % is person actually eilgible, but has to pay extra fees?
-eligible_with_extra_fee(X) :- old_enough(X), young_enough(X), swiss(X), good_hearing(X), 
-    mental_check(X), medium_risk_value(X).
+eligible_with_extra_fee(X) :- old_enough(X), young_enough(X), swiss(X), 
+    good_hearing(X), mental_check(X), medium_risk_value(X).
