@@ -22,6 +22,7 @@ person(mike).  % hearing defect
 person(hans).  % mental illness and over 65
 person(peter).
 person(fredy). % mental illness and between 55 and 65
+person(jakob). % has 3 diseses
 
 
 age(john, 55).
@@ -32,6 +33,7 @@ age(mike, 25).
 age(hans, 68).
 age(peter, 68).
 age(fredy, 57).
+age(jakob, 40).
 
 
 citizen(john, ch).
@@ -42,6 +44,7 @@ citizen(mike, ch).
 citizen(hans, ch).
 citizen(peter, ch).
 citizen(fredy, ch).
+citizen(jakob, ch).
 
 %------------------------------------------------------------------------------
 % If a person has a disease it is a patient.
@@ -51,6 +54,9 @@ citizen(fredy, ch).
 patient(mike, hearing).
 patient(hans, mental).
 patient(fredy, mental).
+patient(jakob, mental).
+patient(jakob, hearing).
+patient(jakob, heart).
 
 %------------------------------------------------------------------------------
 % The following rules are phrased in a way, where they return true, if the
@@ -73,8 +79,21 @@ good_hearing(X) :- person(X), \+ patient(X, hearing).
 % people older than 65 and suffer from mental ilnesses are not eligble
 mental_check(X) :- person(X), \+ (age(X, Y), Y > 65, patient(X, mental)).
 
+% count number of elements in a list (recursive)
+% code found here (https://stackoverflow.com/questions/44999026/counting-list-size-resulting-from-a-findall-not-working-in-prolog)
+list_length([] , 0 ).
+list_length([_|Xs] , L ) :- 
+        list_length(Xs,N) , 
+        L is N+1 .
+
+% list of diseases a given patient has
+disease_list(X,L) :- findall(Y, patient(X,Y),L).
+
+% check if patient has more than two diseases
+more_than_two_diseases(X, List, Count) :- disease_list(X, List), list_length(List, Count), Count > 2.
+
 % people having three or more diseases
-high_risk_value(X) :- person(X), medium_risk_value(X). % idk how to check +3 diseases
+high_risk_value(X) :- person(X), more_than_two_diseases(X, _, _).
 
 % people older than 55 AND (suffer from mental ilnesses OR having 2 diseases)
 medium_risk_value(X) :- person(X), (age(X,Y), Y > 55, patient(X, mental)).
