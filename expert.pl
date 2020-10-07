@@ -71,7 +71,7 @@ swiss(X) :- person(X), citizen(X,Y), Y = ch.
 good_hearing(X) :- person(X), \+ patient(X, hearing).
 
 % people older than 65 and suffer from mental ilnesses are not eligble
-mental_check(X) :- person(X), \+ (age(X, Y), Y > 64, patient(X, mental)). % why not Y>65 ???
+mental_check(X) :- person(X), \+ (age(X, Y), Y > 65, patient(X, mental)).
 
 % people having three or more diseases
 high_risk_value(X) :- person(X), medium_risk_value(X). % idk how to check +3 diseases
