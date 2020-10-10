@@ -1,11 +1,22 @@
+%- -----------------------------------------------------------------------------
 % AI-Technologies Assigment
-% Authors: Robin Roth, Christian Roth
-% This knowledge base is part of the final assignment.
+% -----------------------------------------------------------------------------
+% Authors:   Robin Roth, Christian Roth
+% Course:    AI Technologies
+% Semester:  HS 2020
+%
+% This knowledge base is part of the assignment.
+% It contains the knwoledge from the section "expert knowledge".
+%------------------------------------------------------------------------------
 
+
+
+%------------------------------------------------------------------------------
 % diseases that will be checked.
+%------------------------------------------------------------------------------
+
 disease(hearing).
 disease(mental).
-
 disease(cholestorol).
 disease(diabetes).
 disease(heart).
@@ -20,10 +31,13 @@ person(alice). % too old
 person(bob).   % not swiss
 person(mike).  % hearing defect
 person(hans).  % mental illness and over 65
-person(peter).
-person(fredy). % mental illness and between 55 and 65
-person(jakob). % has 3 diseses
+person(peter). % is eligible
+person(fredy). % mental illness and over 55 -> medium risk value
+person(jakob). % has 3 diseses -> high risk value
 
+%------------------------------------------------------------------------------
+% Ages of people
+%------------------------------------------------------------------------------
 
 age(john, 55).
 age(mark, 18).
@@ -35,6 +49,9 @@ age(peter, 68).
 age(fredy, 57).
 age(jakob, 40).
 
+%------------------------------------------------------------------------------
+% Citizenship of each person
+%------------------------------------------------------------------------------
 
 citizen(john, ch).
 citizen(mark, ch).
@@ -47,10 +64,9 @@ citizen(fredy, ch).
 citizen(jakob, ch).
 
 %------------------------------------------------------------------------------
-% If a person has a disease it is a patient.
+% Some people have diseases, some even multiple
 %------------------------------------------------------------------------------
 
-%patient(X,Y):- person(X), disease(Y).
 patient(mike, hearing).
 patient(hans, mental).
 patient(fredy, mental).
@@ -101,10 +117,9 @@ medium_risk_value(X) :- person(X), (age(X,Y), Y > 55, patient(X, mental)).
 % people whose risk values are not high and medium --> low
 low_risk_value(X) :- person(X), \+ (medium_risk_value(X);  high_risk_value(X)).
 
-% is person actually eilgible?
-eligible(X) :- old_enough(X), young_enough(X), swiss(X), good_hearing(X), 
-    mental_check(X), low_risk_value(X).
+% is person eilgible for insurance?
+eligible(X) :- person(X), old_enough(X), young_enough(X), swiss(X), good_hearing(X), 
+    mental_check(X), \+ high_risk_value(X).
 
-% is person actually eilgible, but has to pay extra fees?
-eligible_with_extra_fee(X) :- old_enough(X), young_enough(X), swiss(X), 
-    good_hearing(X), mental_check(X), medium_risk_value(X).
+% does person have to pay an extra fee?
+extra_fee(X) :- eligible(X), medium_risk_value(X).
