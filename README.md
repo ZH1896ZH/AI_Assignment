@@ -6,7 +6,7 @@
 This repository contains the deliverables of the assignment for the modlue "AI-Technologies".
 The assignment consitsted of three parts.
 
-- ![Expert Knowledge](# Transforming-Expert-Knowledge-into-a-Knowledge-System)
+- ![Expert Knowledge](#Transforming-Expert-Knowledge-into-a-Knowledge-System)
 
 This document serves as the last delivereable. Namely, a documentation of how the proir steps we relaized.
 
