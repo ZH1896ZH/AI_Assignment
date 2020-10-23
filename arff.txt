@@ -1,0 +1,20 @@
+le.com/github/google/eng-edu/blob/master/ml/pc/exercises/image_classification_part2.ipynb?utm_source=github&utm_campaign=ic-practicum&utm_medium=referral&hl=en&utm_content=imageexercise2-colab-gh16:01
+von Florian Lang an Alle:
+yes16:02
+von Stephan Jüngling an Alle:
+back in the plenary session: 16:3016:03
+von Daniel an Alle:
+yes16:34
+von Christian Roth an Alle:
+Where on moodle is the insurance-data.csv? I can only find a .arff file16:45
+Is that the right one?16:45
+von Florian Lang an Alle:
+yes16:45
+from scipy.io import arff16:45
+von Christian Roth an Alle:
+Thanks16:46
+von Florian Lang an Alle:
+data = arff.loadarff('xxx data path xxx')16:46
+von Florian Lang an Christian Roth (privat):
+# Load Data data = arff.loadarff('/content/drive/My Drive/AI stuff/Project_Learning.arff') # Transform into Pandas Dataframe df = pd.DataFrame(data[0])16:47
+i have it like this to get it into a Dataframe

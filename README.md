@@ -25,6 +25,91 @@ Before we even started to write any rules in `Prolog`, we created the following 
 
 ![tree](tree/tree.png)
 
+We've created a set of sample patients to test our rules with. Each one, with the exception of two had at least one feature, that would prevent him from beign eligible.
+
+The rules were implemented in the exact order shown in the decision tree.
+The "questions" they answer were explicitly phrased in a way, where a negative answer would disqualify the patient from being eligible and a positive answer would get him into the next "stage".
+That way we can check eligibility by simply chaining these rules together with a logical "AND" or `,` in Prolog sytax.
+
+There are two rules checking for appropriate age.
+
+```prolog
+% people younger than 21 are not eligible
+old_enough(X) :- person(X), age(X,Y), Y > 21.
+
+% people older than 70 are not eligible
+young_enough(X) :- person(X), age(X,Y), Y < 70.
+```
+
+Then we check wheter the patient is a swiss ciitzen. If he isn't hes automatically disqualified.
+
+```prolog
+% people living in switzerland are eligible
+swiss(X) :- person(X), citizen(X,Y), Y = ch.
+```
+
+As people with hearing defects are also not eligible, we next check, wheter they suffer form a hearing impairment.
+So, if the patien does NOT have this "disease", he is still eligible.
+
+```prolog
+% people with hearing defects are not eligble
+good_hearing(X) :- person(X), \+ patient(X, hearing).
+```
+
+A mental illness can mean exclusion, but only if the patient is over 65 years of age.
+Therefore if a patient is over 65 we need to check if he has a mental ilness.
+
+```prolog
+% people older than 65 and suffer from mental ilnesses are not eligble
+mental_check(X) :- person(X), \+ (age(X, Y), Y > 65, patient(X, mental)).
+```
+
+As a patient with three diseases is a high risk patient, we need to be able to count diseases. We implemented this rule as follows.
+
+```prolog
+% count number of elements in a list (recursive)
+% code found here (https://stackoverflow.com/questions/44999026/counting-list-size-resulting-from-a-findall-not-working-in-prolog)
+list_length([] , 0 ).
+list_length([_|Xs] , L ) :- 
+        list_length(Xs,N) , 
+        L is N+1 .
+
+% list of diseases a given patient has
+disease_list(X,L) :- findall(Y, patient(X,Y),L).
+
+% check if patient has more than two diseases
+more_than_two_diseases(X, List, Count) :- disease_list(X, List), list_length(List, Count), Count > 2.
+
+% people having three or more diseases
+high_risk_value(X) :- person(X), more_than_two_diseases(X, _, _).
+```
+
+A medium risk patient suffers from mental illness OR has 2 diseases.
+
+```prolog
+% people older than 55 AND (suffer from mental ilnesses OR having 2 diseases)
+medium_risk_value(X) :- person(X), (age(X,Y), Y > 55, patient(X, mental)).
+```
+
+Low risk patient are the remaining people, who are neither high- nor medium risk.
+
+```prolog
+% people whose risk values are not high and medium --> low
+low_risk_value(X) :- person(X), \+ (medium_risk_value(X);  high_risk_value(X)).
+```
+
+As a very last step, we want to just be able to check if a patient is eligible and
+ in the case of a medium risk value, if any extra fee applies.
+
+```prolog
+% is person eilgible for insurance?
+eligible(X) :- person(X), old_enough(X), young_enough(X), swiss(X), good_hearing(X), 
+    mental_check(X), \+ high_risk_value(X).
+
+% does person have to pay an extra fee?
+extra_fee(X) :- eligible(X), medium_risk_value(X).
+```
+
 Our defintion of the rules in `Prolog` can be seen in this document [expert.pl](https://github.com/sekthor/ai-assignment/blob/master/expert.pl).
 
 
