@@ -141,4 +141,12 @@ The python script can be seen on google colab [knowledge_extraction.ipynb](https
 
 ## Combining KE and ML
 
+In the last lecutre of the course we have looked at different possibilities to combine Knowledge Engineering and Machine Learning.
+As we now have two independently working systems, the question arises, how to best combine them.
+We have considered the different possibilites and with how the two systems have turned out, we belive a "chaining" to be the best method.
+
+This means, the data will be fist categorized by the Machine Learning model.
+It has the capability to classify the patients into low, medium and high risk patients.
+This information could then be fed on to our Prolog Knowledge base where the explicit rules can further narrow down the selection of eligible patients.
+
 ![combining_model](tree/Combining_KE_ML.png)
