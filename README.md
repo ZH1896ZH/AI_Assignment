@@ -136,7 +136,7 @@ The target matrix contains only the risk values.
 8. Make a prediction with the testing-set.
 9. Compare the accuracy of the predication.
 
-The python script can be seen on [knowledge_extraction.ipynb](https://colab.research.google.com/drive/1YQTKCYbEk49Kla6bi7dIiX1yr1KsCPyY?usp=sharing)
+The python script can be seen on google colab [knowledge_extraction.ipynb](https://colab.research.google.com/drive/1YQTKCYbEk49Kla6bi7dIiX1yr1KsCPyY?usp=sharing)
 
 
 ## Combining KE and ML
