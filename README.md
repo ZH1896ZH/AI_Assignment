@@ -10,7 +10,7 @@ The assignment consitsted of three parts.
 - Extracting Knowledge (using ML)
 - Combining KE and ML
 
-This document serves as the last delivereable. Namely, a documentation of how the proir steps we relaized.
+This document serves as the last delivereable. Namely, a documentation of how the proir steps we realized.
 
 
 ## Transforming Expert Knowledge into a Knowledge System
