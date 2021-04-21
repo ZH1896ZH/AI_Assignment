@@ -3,7 +3,7 @@
 - **Authors:** Robin Roth, Christian Roth
 - **Semester:** HS 2020
 
-This repository contains the deliverables of the assignment for the modlue "AI-Technologies".
+This repository contains the deliverables of the assignment for the module "AI-Technologies".
 The assignment consitsted of three parts.
 
 - Expert Knowledge (using KE)
